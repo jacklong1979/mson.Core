@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IdentityModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using mson.Core.Common;
 using mson.Core.Models;
@@ -16,10 +17,20 @@ namespace mson.Core.AuthorizationServerApi.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private readonly ILogger<ValuesController> _logger;
+        public ValuesController(ILogger<ValuesController> logger)
+        {
+            _logger = logger;
+        }
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            _logger.LogInformation("中国人民【LogInformation】");
+            _logger.LogDebug("中国人民【LogDebug】");
+            _logger.LogWarning("中国人民【LogWarning】");
+            _logger.LogError("中国人民【LogError】");
+            _logger.LogTrace("中国人民【LogTrace】");
             return new string[] { "value1", "value2" };
         }
 

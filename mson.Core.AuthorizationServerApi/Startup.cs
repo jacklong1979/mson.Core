@@ -13,14 +13,16 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using mson.Core.Common;
-
+using NLog.Extensions.Logging;
+using NLog.Web;
 namespace mson.Core.AuthorizationServerApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            env.ConfigureNLog("nlog.config");//增加日志配置文件
         }
 
         public IConfiguration Configuration { get; }
@@ -65,12 +67,15 @@ namespace mson.Core.AuthorizationServerApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+           
+            loggerFactory.AddNLog();//
+            app.AddNLogWeb();//增加  NLog to ASP.NET Core
             app.UseAuthentication();
             app.UseMvc();
         }
