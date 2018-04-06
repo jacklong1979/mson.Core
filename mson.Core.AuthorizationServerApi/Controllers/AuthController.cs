@@ -51,12 +51,12 @@ namespace mson.Core.AuthorizationServerApi.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-            new Claim(JwtClaimTypes.Audience,"api"),
-            new Claim(JwtClaimTypes.Issuer,"http://localhost:5200"),
-            new Claim(JwtClaimTypes.Id, user.UserId.ToString()),
-            new Claim(JwtClaimTypes.Name, user.UserName),
-            new Claim(JwtClaimTypes.Email, user.Email),
-            new Claim(JwtClaimTypes.PhoneNumber, user.PhoneNumber)
+                    new Claim(JwtClaimTypes.Audience,"api"),
+                    new Claim(JwtClaimTypes.Issuer,"http://localhost:5200"),
+                    new Claim(JwtClaimTypes.Id, user.UserId.ToString()),
+                    new Claim(JwtClaimTypes.Name, user.UserName),
+                    new Claim(JwtClaimTypes.Email, user.Email),
+                    new Claim(JwtClaimTypes.PhoneNumber, user.PhoneNumber)
                 }),
                 Expires = expiresAt,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

@@ -12,13 +12,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using mson.Core.AuthorizationServerApi.Common;
 using mson.Core.Common;
 using NLog.Extensions.Logging;
 using NLog.Web;
 namespace mson.Core.AuthorizationServerApi
 {
     public class Startup
-    {
+    {      
+       
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
@@ -31,9 +33,48 @@ namespace mson.Core.AuthorizationServerApi
         public void ConfigureServices(IServiceCollection services)
         {
             #region 注册JwtBearer认证
-            services.AddAuthentication(x => {
+            //var audienceConfig = Configuration.GetSection("Audience");
+            //var symmetricKeyAsBase64 = audienceConfig["Secret"];
+            //var keyByteArray = Encoding.ASCII.GetBytes(symmetricKeyAsBase64);
+            //var signingKey = new SymmetricSecurityKey(keyByteArray);
+
+            //var tokenValidationParameters = new TokenValidationParameters
+            //{
+            //    // The signing key must match!
+            //    ValidateIssuerSigningKey = true,
+            //    IssuerSigningKey = signingKey,
+            //    // Validate the JWT Issuer (iss) claim
+            //    ValidateIssuer = true,
+            //    ValidIssuer = audienceConfig["Issuer"],
+
+            //    // Validate the JWT Audience (aud) claim
+            //    ValidateAudience = true,
+            //    ValidAudience = audienceConfig["Audience"],
+
+            //    // Validate the token expiry
+            //    ValidateLifetime = true,
+
+            //    ClockSkew = TimeSpan.Zero
+            //};
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //})
+            //.AddJwtBearer(o =>
+            //{
+            //    //不使用https
+            //    //o.RequireHttpsMetadata = false;
+            //    o.TokenValidationParameters = tokenValidationParameters;
+            //});
+
+
+
+            services.AddAuthentication(x =>
+            {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;//默认的认证方案
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;//默认的握手方案
+
             })
           .AddJwtBearer(o =>
           {
@@ -43,7 +84,7 @@ namespace mson.Core.AuthorizationServerApi
                   RoleClaimType = JwtClaimTypes.Role,
                   //下面三个参数是必须
                   ValidIssuer = "http://localhost:2000",//Token颁发机构
-                  ValidAudience = "api",//颁发给谁
+                  ValidAudience = "api",//颁发给谁(观众)
                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Consts.Secret))//签名秘钥
 
                   /***********************************TokenValidationParameters的参数默认值***********************************/
@@ -63,6 +104,7 @@ namespace mson.Core.AuthorizationServerApi
               };
           });
             #endregion
+          
             services.AddMvc();
         }
 
@@ -77,6 +119,18 @@ namespace mson.Core.AuthorizationServerApi
             loggerFactory.AddNLog();//
             app.AddNLogWeb();//增加  NLog to ASP.NET Core
             app.UseAuthentication();
+            #region 注册中间件
+            // Add JWT generation endpoint:
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Consts.Secret));
+            var options = new TokenOption
+            {
+                Audience = "api",
+                Issuer = "http://localhost:2000",
+                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
+            };
+
+            app.UseMiddleware<TokenMiddleware>(Options.Create(options));//注册中间件
+            #endregion
             app.UseMvc();
         }
     }

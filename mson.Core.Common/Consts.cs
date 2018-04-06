@@ -10,6 +10,6 @@ namespace mson.Core.Common
         /// <summary>
         /// 签名秘钥
         /// </summary>
-        public const string Secret = "lkc311@163.com";
+        public const string Secret = "lkc311@163.comlkc311@163.comlkc311@163.comlkc311@163.comlkc311@163.comlkc311@163.com";
     }
 }

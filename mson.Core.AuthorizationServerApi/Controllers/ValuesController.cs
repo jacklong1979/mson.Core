@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using IdentityModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -14,6 +15,7 @@ using mson.Core.Models;
 
 namespace mson.Core.AuthorizationServerApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
@@ -71,12 +73,12 @@ namespace mson.Core.AuthorizationServerApi.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-            new Claim(JwtClaimTypes.Audience,"api"),
-            new Claim(JwtClaimTypes.Issuer,"http://localhost:5200"),
-            new Claim(JwtClaimTypes.Id, user.UserId.ToString()),
-            new Claim(JwtClaimTypes.Name, user.UserName),
-            new Claim(JwtClaimTypes.Email, user.Email),
-            new Claim(JwtClaimTypes.PhoneNumber, user.PhoneNumber)
+                    new Claim(JwtClaimTypes.Audience,"api"),
+                    new Claim(JwtClaimTypes.Issuer,"http://localhost:5200"),
+                    new Claim(JwtClaimTypes.Id, user.UserId.ToString()),
+                    new Claim(JwtClaimTypes.Name, user.UserName),
+                    new Claim(JwtClaimTypes.Email, user.Email),
+                    new Claim(JwtClaimTypes.PhoneNumber, user.PhoneNumber)
                 }),
                 Expires = expiresAt,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
