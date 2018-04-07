@@ -32,44 +32,7 @@ namespace mson.Core.AuthorizationServerApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            #region 注册JwtBearer认证
-            //var audienceConfig = Configuration.GetSection("Audience");
-            //var symmetricKeyAsBase64 = audienceConfig["Secret"];
-            //var keyByteArray = Encoding.ASCII.GetBytes(symmetricKeyAsBase64);
-            //var signingKey = new SymmetricSecurityKey(keyByteArray);
-
-            //var tokenValidationParameters = new TokenValidationParameters
-            //{
-            //    // The signing key must match!
-            //    ValidateIssuerSigningKey = true,
-            //    IssuerSigningKey = signingKey,
-            //    // Validate the JWT Issuer (iss) claim
-            //    ValidateIssuer = true,
-            //    ValidIssuer = audienceConfig["Issuer"],
-
-            //    // Validate the JWT Audience (aud) claim
-            //    ValidateAudience = true,
-            //    ValidAudience = audienceConfig["Audience"],
-
-            //    // Validate the token expiry
-            //    ValidateLifetime = true,
-
-            //    ClockSkew = TimeSpan.Zero
-            //};
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-            //.AddJwtBearer(o =>
-            //{
-            //    //不使用https
-            //    //o.RequireHttpsMetadata = false;
-            //    o.TokenValidationParameters = tokenValidationParameters;
-            //});
-
-
-
+            #region 注册JwtBearer认证 注册中间件token 每一种方法  
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;//默认的认证方案
@@ -119,7 +82,7 @@ namespace mson.Core.AuthorizationServerApi
             loggerFactory.AddNLog();//
             app.AddNLogWeb();//增加  NLog to ASP.NET Core
             app.UseAuthentication();
-            #region 注册中间件
+            #region 注册中间件token 每二种方法
             // Add JWT generation endpoint:
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Consts.Secret));
             var options = new TokenOption
