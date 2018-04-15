@@ -61,7 +61,7 @@ namespace mson.Core.AuthorizationServerApi.Controllers
         {
         }
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]CurrentUser userDto)
+        public IActionResult Authenticate([FromBody]UserInfo userDto)
         {
             var user = userDto;// _store.FindUser(userDto.UserName, userDto.Password);
             if (user == null) return Unauthorized();

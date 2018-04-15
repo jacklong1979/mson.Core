@@ -19,6 +19,13 @@ namespace mson.Core.AuthorizationServerApi
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+            //.ConfigureAppConfiguration((context, builder) =>
+            //{
+            //    IHostingEnvironment env = context.HostingEnvironment;
+
+            //    builder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            //        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+            //})
                 .UseStartup<Startup>()
                 .Build();
     }

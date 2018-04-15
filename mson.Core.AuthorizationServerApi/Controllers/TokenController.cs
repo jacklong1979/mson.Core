@@ -26,7 +26,7 @@ namespace mson.Core.AuthorizationServerApi.Controllers
         [HttpGet("gettoken/{uid}/{pwd}")]      
         public IActionResult GetToken(string uid,string pwd)
         {
-            CurrentUser user = new CurrentUser() { UserId = uid,UserName="龙康才", Password = pwd };           
+            UserInfo user = new UserInfo() { UserId = uid,UserName="龙康才", Password = pwd };           
             if (user == null) return Unauthorized();
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Consts.Secret);//签名秘钥
@@ -77,7 +77,7 @@ namespace mson.Core.AuthorizationServerApi.Controllers
         [HttpGet("getuser/{uid}")]
         public IActionResult GetUser(string uid)
         {
-            CurrentUser user = new CurrentUser() { UserId = uid, UserName = "龙康才明天会更好"};          
+            UserInfo user = new UserInfo() { UserId = uid, UserName = "龙康才明天会更好"};          
             return Ok(user);
         }
     }

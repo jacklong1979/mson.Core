@@ -25,6 +25,7 @@ namespace mson.Core.AuthorizationServerApi
         {
             Configuration = configuration;
             env.ConfigureNLog("nlog.config");//增加日志配置文件
+            
         }
 
         public IConfiguration Configuration { get; }
@@ -32,6 +33,7 @@ namespace mson.Core.AuthorizationServerApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // services.AddSingleton<接口, 实现类>();//将接口和实现注入至容器
             #region 注册JwtBearer认证 注册中间件token 每一种方法  
             services.AddAuthentication(x =>
             {
@@ -71,18 +73,18 @@ namespace mson.Core.AuthorizationServerApi
             services.AddMvc();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // 主要是http处理管道配置和一些系统配置 This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-           
+            
             loggerFactory.AddNLog();//
             app.AddNLogWeb();//增加  NLog to ASP.NET Core
             app.UseAuthentication();
-            #region 注册中间件token 每二种方法
+            #region 注册中间件token 第二种方法
             // Add JWT generation endpoint:
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Consts.Secret));
             var options = new TokenOption

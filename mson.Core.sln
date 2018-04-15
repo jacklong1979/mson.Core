@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mson.Core.Models", "mson.Core.Models\mson.Core.Models.csproj", "{175028B0-3D22-47E7-A244-090B37FFB128}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mson.Core.Models", "mson.Core.Models\mson.Core.Models.csproj", "{175028B0-3D22-47E7-A244-090B37FFB128}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mson.Core.Dal", "mson.Core.Dal\mson.Core.Dal.csproj", "{4550877C-2858-4615-8050-40978AEFE3BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mson.Core.Dal", "mson.Core.Dal\mson.Core.Dal.csproj", "{4550877C-2858-4615-8050-40978AEFE3BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mson.Core.Bll", "mson.Core.Bll\mson.Core.Bll.csproj", "{8FD2152A-AF72-4C91-9E1D-421618958E00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mson.Core.Bll", "mson.Core.Bll\mson.Core.Bll.csproj", "{8FD2152A-AF72-4C91-9E1D-421618958E00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mson.Core.Common", "mson.Core.Common\mson.Core.Common.csproj", "{7166A10A-8909-4F71-B718-F9A4040C66F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mson.Core.Common", "mson.Core.Common\mson.Core.Common.csproj", "{7166A10A-8909-4F71-B718-F9A4040C66F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mson.Core.WebApi", "mson.Core.WebApi\mson.Core.WebApi.csproj", "{818E2465-25FE-4115-9A5E-AB6047B4142C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mson.Core.WebApi", "mson.Core.WebApi\mson.Core.WebApi.csproj", "{818E2465-25FE-4115-9A5E-AB6047B4142C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mson.Core.AuthorizationServerApi", "mson.Core.AuthorizationServerApi\mson.Core.AuthorizationServerApi.csproj", "{50FD3C07-1978-45DF-B035-23D55F7F4402}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mson.Core.AuthorizationServerApi", "mson.Core.AuthorizationServerApi\mson.Core.AuthorizationServerApi.csproj", "{50FD3C07-1978-45DF-B035-23D55F7F4402}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mson.Core.AuthenticationApi", "mson.Core.AuthenticationApi\mson.Core.AuthenticationApi.csproj", "{8DCED93B-6EF5-4C2A-AEB4-C12CB11AD182}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{50FD3C07-1978-45DF-B035-23D55F7F4402}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50FD3C07-1978-45DF-B035-23D55F7F4402}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50FD3C07-1978-45DF-B035-23D55F7F4402}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DCED93B-6EF5-4C2A-AEB4-C12CB11AD182}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DCED93B-6EF5-4C2A-AEB4-C12CB11AD182}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DCED93B-6EF5-4C2A-AEB4-C12CB11AD182}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DCED93B-6EF5-4C2A-AEB4-C12CB11AD182}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

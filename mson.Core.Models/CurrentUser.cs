@@ -5,7 +5,7 @@ namespace mson.Core.Models
     /// <summary>
     /// 当前用户
     /// </summary>
-    public class CurrentUser
+    public class UserInfo
     {
         public string UserId { get; set; }
         public string  Password { get; set; }

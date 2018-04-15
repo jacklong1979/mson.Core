@@ -31,7 +31,7 @@ namespace mson.Core.AuthorizationServerApi.Controllers
             _logger.LogWarning("中国人民【LogWarning】");
             _logger.LogError("中国人民【LogError】");
             _logger.LogTrace("中国人民【LogTrace】");
-            CurrentUser user = new CurrentUser();
+            UserInfo user = new UserInfo();
             user.UserId = "longkc";
             user.UserName = "中国人";
             user.PhoneNumber = "1355689220";
@@ -39,7 +39,7 @@ namespace mson.Core.AuthorizationServerApi.Controllers
             return Json(user);
         }
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]CurrentUser userDto)
+        public IActionResult Authenticate([FromBody]UserInfo userDto)
         {
             var user = userDto;// _store.FindUser(userDto.UserName, userDto.Password);
             if (user == null) return Unauthorized();
