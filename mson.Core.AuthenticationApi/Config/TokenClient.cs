@@ -40,7 +40,7 @@ namespace mson.Core.AuthenticationApi.Config
         /// 客户端注册，客户端能够访问的资源（通过：AllowedScopes）
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Client> GetClient()
+        public static IEnumerable<Client> GetClients()
         {
             return new List<Client>
             {
@@ -48,14 +48,14 @@ namespace mson.Core.AuthenticationApi.Config
                 new Client
                 {
                     ClientId="client",
-                    AllowedGrantTypes=GrantTypes.ClientCredentials,
+                    AllowedGrantTypes=GrantTypes.ClientCredentials, // 没有交互性用户，使用 clientid/secret 实现认证。
                     ClientSecrets={new Secret(secretString.Sha256())},
-                    AllowedScopes={"api"}
+                    AllowedScopes={"api"}//  // 客户端有权访问的范围（Scopes）
                 },
                 new Client
                 {
                     ClientId = "Client",
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,//没有交互性用户，使用 clientid/secret 实现认证。
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())

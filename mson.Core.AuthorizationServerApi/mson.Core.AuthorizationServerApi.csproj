@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\mson.Core.Common\mson.Core.Common.csproj" />
     <ProjectReference Include="..\mson.Core.Models\mson.Core.Models.csproj" />
   </ItemGroup>
 

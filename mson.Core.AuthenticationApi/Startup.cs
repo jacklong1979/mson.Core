@@ -14,6 +14,8 @@ using Microsoft.IdentityModel.Tokens;
 using mson.Core.AuthenticationApi.Config;
 using mson.Core.AuthenticationApi.MiddleWare;
 using mson.Core.AuthenticationApi.Common;
+using System.Security.Cryptography;
+
 namespace mson.Core.AuthenticationApi
 {
     public class Startup
@@ -31,7 +33,7 @@ namespace mson.Core.AuthenticationApi
             #region 加载配置文件信息
             services.Configure<TokenConfig>(this.Configuration.GetSection("TokenConfig"));//加载配置文件信息
             #endregion
-            #region JwtRegisteredClaimNames 方式 直接读取配置文件信息，初始化Token 需要验证的信息,如果不同在一台服务，则产生的Token与验证的Token的服务器验证信息与产生的信息要一致
+            #region 【方式1】JwtRegisteredClaimNames 方式 直接读取配置文件信息，初始化Token 需要验证的信息,如果不同在一台服务，则产生的Token与验证的Token的服务器验证信息与产生的信息要一致
             var audienceConfig = Configuration.GetSection("TokenConfig");
             var symmetricKeyAsBase64 = audienceConfig["Secret"];
             var keyByteArray = Encoding.ASCII.GetBytes(symmetricKeyAsBase64);
@@ -79,6 +81,30 @@ namespace mson.Core.AuthenticationApi
                 o.TokenValidationParameters = tokenValidationParameters;
             });
             #endregion
+
+            #region 【方式2】IdentityServer + API+Client演示客户端模式
+            // 使用内存存储，密钥，客户端和资源来配置身份服务器。
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryApiResources(TokenClient.GetApiResource())
+                .AddInMemoryClients(TokenClient.GetClients());
+            ////RSA：证书长度2048以上，否则抛异常
+            ////配置AccessToken的加密证书
+            //var rsa = new RSACryptoServiceProvider();
+            ////从配置文件获取加密证书
+            //rsa.ImportCspBlob(Convert.FromBase64String(Configuration["SigningCredential"]));
+            ////IdentityServer4授权服务配置
+            //services.AddIdentityServer()
+            //    .AddSigningCredential(new RsaSecurityKey(rsa))    //设置加密证书
+            //    //.AddTemporarySigningCredential()    //测试的时候可使用临时的证书
+            //    .AddInMemoryScopes(TokenClient.GetScopes())
+            //    .AddInMemoryClients(TokenClient.GetClients())
+            //    //如果是client credentials模式那么就不需要设置验证User了
+            //    .AddResourceOwnerValidator<MyUserValidator>() //User验证接口
+            //    //.AddInMemoryUsers(OAuth2Config.GetUsers())    //将固定的Users加入到内存中
+            //    ;
+         
+            #endregion
             services.AddMvc();
            
         }
@@ -90,6 +116,7 @@ namespace mson.Core.AuthenticationApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseIdentityServer();//【方式2】IdentityServer + API + Client演示客户端模式
             app.UseAuthentication();
             #region  JwtRegisteredClaimNames 方式 注册中间件 TokenMiddleware 
             var audienceConfig = Configuration.GetSection("TokenConfig");

@@ -13,19 +13,19 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using mson.Core.AuthorizationServerApi.Common;
-using mson.Core.Common;
+
 using NLog.Extensions.Logging;
 using NLog.Web;
 namespace mson.Core.AuthorizationServerApi
 {
     public class Startup
-    {      
-       
+    {
+
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
             env.ConfigureNLog("nlog.config");//增加日志配置文件
-            
+
         }
 
         public IConfiguration Configuration { get; }
@@ -50,7 +50,7 @@ namespace mson.Core.AuthorizationServerApi
                   //下面三个参数是必须
                   ValidIssuer = "http://localhost:2000",//Token颁发机构
                   ValidAudience = "api",//颁发给谁(观众)
-                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Consts.Secret))//签名秘钥
+                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("lkc311@163.com"))//签名秘钥
 
                   /***********************************TokenValidationParameters的参数默认值***********************************/
                   // RequireSignedTokens = true,
@@ -69,24 +69,24 @@ namespace mson.Core.AuthorizationServerApi
               };
           });
             #endregion
-          
+
             services.AddMvc();
         }
 
         // 主要是http处理管道配置和一些系统配置 This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env,ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             loggerFactory.AddNLog();//
             app.AddNLogWeb();//增加  NLog to ASP.NET Core
             app.UseAuthentication();
             #region 注册中间件token 第二种方法
             // Add JWT generation endpoint:
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Consts.Secret));
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("lkc311@163.com"));
             var options = new TokenOption
             {
                 Audience = "api",

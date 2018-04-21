@@ -5,17 +5,19 @@ VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mson.Core.Models", "mson.Core.Models\mson.Core.Models.csproj", "{175028B0-3D22-47E7-A244-090B37FFB128}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mson.Core.Dal", "mson.Core.Dal\mson.Core.Dal.csproj", "{4550877C-2858-4615-8050-40978AEFE3BB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mson.Core.Bll", "mson.Core.Bll\mson.Core.Bll.csproj", "{8FD2152A-AF72-4C91-9E1D-421618958E00}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mson.Core.Common", "mson.Core.Common\mson.Core.Common.csproj", "{7166A10A-8909-4F71-B718-F9A4040C66F7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mson.Core.WebApi", "mson.Core.WebApi\mson.Core.WebApi.csproj", "{818E2465-25FE-4115-9A5E-AB6047B4142C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mson.Core.AuthorizationServerApi", "mson.Core.AuthorizationServerApi\mson.Core.AuthorizationServerApi.csproj", "{50FD3C07-1978-45DF-B035-23D55F7F4402}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mson.Core.AuthenticationApi", "mson.Core.AuthenticationApi\mson.Core.AuthenticationApi.csproj", "{8DCED93B-6EF5-4C2A-AEB4-C12CB11AD182}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mson.Core.AuthenticationApi", "mson.Core.AuthenticationApi\mson.Core.AuthenticationApi.csproj", "{8DCED93B-6EF5-4C2A-AEB4-C12CB11AD182}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mson.Core.Server.AuthorizeApi", "mson.Core.Server.AuthorizeApi\mson.Core.Server.AuthorizeApi.csproj", "{7FC5F578-D89E-4AFC-98E0-A07F6C005299}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mson.Core.Server.ResourceApi", "mson.Core.Server.ResourceApi\mson.Core.Server.ResourceApi.csproj", "{F6E8BA2F-CC41-40BF-B67B-39C4488D86DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mson.Core.Server.Models", "mson.Core.Server.Models\mson.Core.Server.Models.csproj", "{C4DD214A-4EE9-4F18-AFFC-BE5942031561}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mson.Core.Client.Test", "mson.Core.Client.Test\mson.Core.Client.Test.csproj", "{9E07CBA5-ABB2-4AA9-A304-F824E1AE08DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,18 +29,6 @@ Global
 		{175028B0-3D22-47E7-A244-090B37FFB128}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{175028B0-3D22-47E7-A244-090B37FFB128}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{175028B0-3D22-47E7-A244-090B37FFB128}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4550877C-2858-4615-8050-40978AEFE3BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4550877C-2858-4615-8050-40978AEFE3BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4550877C-2858-4615-8050-40978AEFE3BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4550877C-2858-4615-8050-40978AEFE3BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8FD2152A-AF72-4C91-9E1D-421618958E00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8FD2152A-AF72-4C91-9E1D-421618958E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8FD2152A-AF72-4C91-9E1D-421618958E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8FD2152A-AF72-4C91-9E1D-421618958E00}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7166A10A-8909-4F71-B718-F9A4040C66F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7166A10A-8909-4F71-B718-F9A4040C66F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7166A10A-8909-4F71-B718-F9A4040C66F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7166A10A-8909-4F71-B718-F9A4040C66F7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{818E2465-25FE-4115-9A5E-AB6047B4142C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{818E2465-25FE-4115-9A5E-AB6047B4142C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{818E2465-25FE-4115-9A5E-AB6047B4142C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,6 +41,22 @@ Global
 		{8DCED93B-6EF5-4C2A-AEB4-C12CB11AD182}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DCED93B-6EF5-4C2A-AEB4-C12CB11AD182}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DCED93B-6EF5-4C2A-AEB4-C12CB11AD182}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FC5F578-D89E-4AFC-98E0-A07F6C005299}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FC5F578-D89E-4AFC-98E0-A07F6C005299}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FC5F578-D89E-4AFC-98E0-A07F6C005299}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FC5F578-D89E-4AFC-98E0-A07F6C005299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6E8BA2F-CC41-40BF-B67B-39C4488D86DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6E8BA2F-CC41-40BF-B67B-39C4488D86DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6E8BA2F-CC41-40BF-B67B-39C4488D86DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6E8BA2F-CC41-40BF-B67B-39C4488D86DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4DD214A-4EE9-4F18-AFFC-BE5942031561}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4DD214A-4EE9-4F18-AFFC-BE5942031561}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4DD214A-4EE9-4F18-AFFC-BE5942031561}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4DD214A-4EE9-4F18-AFFC-BE5942031561}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E07CBA5-ABB2-4AA9-A304-F824E1AE08DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E07CBA5-ABB2-4AA9-A304-F824E1AE08DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E07CBA5-ABB2-4AA9-A304-F824E1AE08DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E07CBA5-ABB2-4AA9-A304-F824E1AE08DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
