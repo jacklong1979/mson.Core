@@ -50,6 +50,7 @@ namespace mson.Core.Client.Test
                 Console.WriteLine(JArray.Parse(content));
             }
            await PasswordApiTests();
+           
         }
         public static async Task PasswordApiTests()
         {
@@ -63,6 +64,23 @@ namespace mson.Core.Client.Test
             var apiResult = response.Content.ReadAsStringAsync().Result;
             Console.WriteLine(apiResult);
             Console.ReadKey();
+        }
+        private async Task<TokenResponse> GetToken(string clientId, string clientSecret, string grantType, string userName, string password, string scope)
+        {
+            var client = new DiscoveryClient($"http://localhost:5000");
+            client.Policy.RequireHttps = false;
+            var disco = await client.GetAsync();
+            var tokenClient = new TokenClient(disco.TokenEndpoint, clientId, clientSecret);
+            return await tokenClient.RequestResourceOwnerPasswordAsync(userName, password, scope);
+        }
+
+        private async Task<TokenResponse> GetRefreshToken(string clientId, string clientSecret, string grantType, string refreshToken)
+        {
+            var client = new DiscoveryClient($"http://localhost:5000");
+            client.Policy.RequireHttps = false;
+            var disco = await client.GetAsync();
+            var tokenClient = new TokenClient(disco.TokenEndpoint, clientId, clientSecret);
+            return await tokenClient.RequestRefreshTokenAsync(refreshToken);
         }
 
     }

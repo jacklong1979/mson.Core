@@ -28,10 +28,10 @@ namespace mson.Core.Server.AuthorizeApi
             // 使用内存存储，密钥，客户端和资源来配置身份服务器。
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
-                .AddInMemoryApiResources(APIClient.GetApiResource())
-                .AddInMemoryClients(APIClient.GetClients())
-                .AddResourceOwnerValidator<MyUserValidator>()
-                .AddTestUsers(APIClient.GeTestUsers());
+                .AddInMemoryApiResources(APIClient.GetApiResource())//添加api资源
+                .AddInMemoryClients(APIClient.GetClients())           //添加客户端   
+                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>();
+              // .AddTestUsers(APIClient.GeTestUsers());//优化于上面的 ResourceOwnerPasswordValidator
 
             ////RSA：证书长度2048以上，否则抛异常
             ////配置AccessToken的加密证书

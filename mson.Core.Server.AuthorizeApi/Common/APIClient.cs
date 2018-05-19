@@ -1,40 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
 using IdentityServer4.Validation;
+using Microsoft.IdentityModel.Tokens;
 using mson.Core.Server.Models;
 using static IdentityServer4.IdentityServerConstants;
 
 namespace mson.Core.Server.AuthorizeApi.Common
 {
-    #region 用户Resource Owner Password模式需要对账号密码进行验证
-    /// <summary>
-    /// 用户Resource Owner Password模式需要对账号密码进行验证
-    /// </summary>
-    public class MyUserValidator : IResourceOwnerPasswordValidator
-    {
-        public Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
-        {
-            if (context.UserName == "admin" && context.Password == "123")
-            {
-                //验证成功
-                //使用subject可用于在资源服务器区分用户身份等等
-                //获取：资源服务器通过User.Claims.Where(l => l.Type == "sub").FirstOrDefault();获取
-                context.Result = new GrantValidationResult(subject: "admin", authenticationMethod: "custom");
-            }
-            else
-            {
-                //验证失败
-                context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "invalid custom credential");
-            }
-            return Task.FromResult(0);
-        }
-    }
-    #endregion
+   
     /// <summary>
     /// IdentityServer + API+Client演示客户端模式
     /// </summary>
@@ -42,7 +21,7 @@ namespace mson.Core.Server.AuthorizeApi.Common
     {
 
         #region 【方式1】IdentityServer + API+Client演示客户端模式
-        static string secretString = "25Z$%^&*(_)?><nbc6";
+        static string secretString = "lkc311@163.com";
         /// <summary>
         /// 定义授权范围（通过API可以访问的资源）
         /// </summary>
@@ -61,18 +40,31 @@ namespace mson.Core.Server.AuthorizeApi.Common
         /// <returns></returns>
         public static IEnumerable<Client> GetClients()
         {
+            var keyByteArray = Encoding.ASCII.GetBytes(secretString);
+            var signingKey = new SymmetricSecurityKey(keyByteArray);
             return new List<Client>
             {
+                /*
+                授权码模式（authorization_code）
+
+                简化模式（implicit）
+
+                密码模式（password）
+
+                客户端模式（client_credentials）
+                */
                 #region 授权中心配置,可以增加多个不同的 Client
-                new Client
+        new Client
                 {
                     ClientId="client1",
                     AllowedGrantTypes=GrantTypes.ClientCredentials, // 没有交互性用户，使用 clientid/secret 实现认证。client credentials模式则不需要对账号密码验证
                     ClientSecrets={new Secret(secretString.Sha256())},
+                    AccessTokenLifetime=10,
                     AllowedScopes={ "api1" }//  // 客户端有权访问的范围（Scopes）
                 },
                new Client
                 {
+
                     ClientId = "client",
 	                // 没有交互性用户，使用 clientid/secret 实现认证。
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
@@ -81,6 +73,8 @@ namespace mson.Core.Server.AuthorizeApi.Common
                     {
                         new Secret(secretString.Sha256())
                     },
+                     AccessTokenLifetime=10,
+                     AccessTokenType =AccessTokenType.Jwt,
 	                // 客户端有权访问的范围（Scopes）
                     AllowedScopes = { "api1" }
                 },
@@ -88,12 +82,21 @@ namespace mson.Core.Server.AuthorizeApi.Common
                 {
                      ClientId = "ro.client",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-
+                    AccessTokenType = AccessTokenType.Jwt,
+                    AccessTokenLifetime = 20,
+                    IdentityTokenLifetime = 10,
+                    UpdateAccessTokenClaimsOnRefresh = true,
+                    SlidingRefreshTokenLifetime = 30,
+                    AllowOfflineAccess = true,
+                    RefreshTokenExpiration = TokenExpiration.Absolute,
+                    RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                    AlwaysSendClientClaims = true,
+                    Enabled = true,
                     ClientSecrets =
                     {
                         new Secret(secretString.Sha256())
-                    },
-                    AllowedScopes = { "api1" }
+                    },                   
+                    AllowedScopes = { IdentityServerConstants.StandardScopes.OfflineAccess, "api1" }
                     //ClientId = "pwdClient",
                     //AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,//Resource Owner Password模式需要对账号密码进行验证（如果是client credentials模式则不需要对账号密码验证了）：
                     //ClientSecrets ={new Secret(secretString.Sha256())},                  
